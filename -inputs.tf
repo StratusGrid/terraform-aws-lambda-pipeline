@@ -19,6 +19,12 @@ variable "description" {
   type = string
 }
 
+variable "detect_changes" {
+  description = "Controls automatically starting your pipeline when a new commit is made on the configured repository and branch."
+  type = bool
+  default = true
+}
+
 variable "environment_variables" {
   description = "List of key values for lambda environment variables"
   type        = map(string)

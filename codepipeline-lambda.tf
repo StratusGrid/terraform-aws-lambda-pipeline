@@ -23,6 +23,7 @@ resource "aws_codepipeline" "lambda_codepipeline" {
         ConnectionArn    = var.codestar_connection_arn//data.aws_codestarconnections_connection.github.arn
         FullRepositoryId = var.github_repo_name
         BranchName       = var.github_branch_name
+        DetectChanges    = var.detect_changes
       }
     }
   }
