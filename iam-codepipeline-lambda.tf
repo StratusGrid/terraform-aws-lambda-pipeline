@@ -25,7 +25,7 @@ data "aws_iam_policy_document" "lambda_codepipeline" {
       "s3:GetObjectVersion",
       "s3:GetBucketVersioning",
       "s3:PutObject",
-       "s3:*"
+      "s3:*"
     ]
     resources = [
       "arn:aws:s3:::${var.artifact_store_bucket_name}",
@@ -37,7 +37,7 @@ data "aws_iam_policy_document" "lambda_codepipeline" {
       "codebuild:BatchGetBuilds",
       "codebuild:StartBuild"
     ]
-    resources = [ "*"
+    resources = ["*"
     ]
   }
   statement {
@@ -49,19 +49,19 @@ data "aws_iam_policy_document" "lambda_codepipeline" {
       "codedeploy:GetDeploymentConfig",
       "codedeploy:RegisterApplicationRevision"
     ]
-    resources = [ "*"
+    resources = ["*"
     ]
   }
   statement {
-    actions = [ "codestar-connections:UseConnection"
+    actions = ["codestar-connections:UseConnection"
     ]
-    resources = [ var.codestar_connection_arn
+    resources = [var.codestar_connection_arn
     ]
   }
 }
 
 resource "aws_iam_role_policy" "lambda_codepipeline" {
-  name = "${var.name}_codepipeline_policy"
-  role = aws_iam_role.lambda_codepipeline.id
+  name   = "${var.name}_codepipeline_policy"
+  role   = aws_iam_role.lambda_codepipeline.id
   policy = data.aws_iam_policy_document.lambda_codepipeline.json
 }

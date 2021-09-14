@@ -3,7 +3,7 @@ resource "aws_codepipeline" "lambda_codepipeline" {
   role_arn = aws_iam_role.lambda_codepipeline.arn
 
   artifact_store {
-    location = var.artifact_store_bucket_name//aws_s3_bucket.test_resources_bucket.id
+    location = var.artifact_store_bucket_name //aws_s3_bucket.test_resources_bucket.id
     type     = "S3"
   }
 
@@ -20,7 +20,7 @@ resource "aws_codepipeline" "lambda_codepipeline" {
 
 
       configuration = {
-        ConnectionArn    = var.codestar_connection_arn//data.aws_codestarconnections_connection.github.arn
+        ConnectionArn    = var.codestar_connection_arn //data.aws_codestarconnections_connection.github.arn
         FullRepositoryId = var.github_repo_name
         BranchName       = var.github_branch_name
         DetectChanges    = var.detect_changes
