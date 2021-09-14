@@ -20,7 +20,7 @@ variable "description" {
 }
 
 variable "detect_changes" {
-  description = "Controls automatically starting your pipeline when a new commit is made on the configured repository and branch."
+  description = "Controls if the codepipeline execution is started automatically when you make a new commit on the repository."
   type        = bool
   default     = true
 }
