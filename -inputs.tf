@@ -60,8 +60,8 @@ variable "lambda_handler" {
   type        = string
 }
 
-variable "lambda_layer_version" {
-  description = "Layer to add to the lambda function"
+variable "layers" {
+  description = "List of Lambda Layer Version ARNs (maximum of 5) to attach to your Lambda Function."
   type        = list(string)
   default     = []
 }
