@@ -3,7 +3,7 @@ resource "aws_lambda_function" "this" {
   description                    = var.description
   function_name                  = var.name
   handler                        = var.lambda_handler
-  layers                         = []
+  layers                         = [var.lambda_layer_version]
   memory_size                    = var.lambda_memory_size
   reserved_concurrent_executions = -1 //?
   role                           = aws_iam_role.lambda.arn
