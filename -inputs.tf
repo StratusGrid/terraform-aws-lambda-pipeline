@@ -62,8 +62,8 @@ variable "lambda_handler" {
 
 variable "lambda_layer_version" {
   description = "Layer to add to the lambda function"
-  type = list(string)
-  default = []
+  type        = list(string)
+  default     = []
 }
 
 variable "lambda_memory_size" {
