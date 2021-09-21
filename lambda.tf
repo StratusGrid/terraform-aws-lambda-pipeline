@@ -3,7 +3,7 @@ resource "aws_lambda_function" "this" {
   description                    = var.description
   function_name                  = var.name
   handler                        = var.lambda_handler
-  layers                         = []
+  layers                         = var.layers
   memory_size                    = var.lambda_memory_size
   reserved_concurrent_executions = -1 //?
   role                           = aws_iam_role.lambda.arn
@@ -11,7 +11,7 @@ resource "aws_lambda_function" "this" {
   timeout                        = 60
 
   dynamic "environment" {
-    for_each  = local.environment_map
+    for_each = local.environment_map
     content {
       variables = environment.value
     }
@@ -69,13 +69,13 @@ EOF
 }
 
 locals {
-    policies = {
+  policies = {
     for param, policy in var.policy_configs_map : param => policy.arn if policy.enabled
   }
 }
 
 resource "aws_iam_role_policy_attachment" "lambda" {
-  role = aws_iam_role.lambda.name
+  role       = aws_iam_role.lambda.name
   for_each   = local.policies
   policy_arn = each.value
 }

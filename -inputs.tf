@@ -1,34 +1,34 @@
 variable "approval_deploy_enabled" {
   description = "Enable approval for deployment step"
   type        = bool
-  default = true
+  default     = true
 }
 
 variable "artifact_store_bucket_name" {
   description = "Name of the bucket that stores artifacts"
-  type = string
+  type        = string
 }
 
 variable "codestar_connection_arn" {
   description = ""
-  type = string
+  type        = string
 }
 
 variable "description" {
   description = "Description of what your Lambda Function does."
-  type = string
+  type        = string
 }
 
 variable "detect_changes" {
-  description = "Controls automatically starting your pipeline when a new commit is made on the configured repository and branch."
-  type = bool
-  default = true
+  description = "Controls if the codepipeline execution is started automatically when you make a new commit on the repository."
+  type        = bool
+  default     = true
 }
 
 variable "environment_variables" {
   description = "List of key values for lambda environment variables"
   type        = map(string)
-  default = null
+  default     = null
 }
 
 variable "github_branch_name" {
@@ -60,6 +60,12 @@ variable "lambda_handler" {
   type        = string
 }
 
+variable "layers" {
+  description = "List of Lambda Layer Version ARNs (maximum of 5) to attach to your Lambda Function."
+  type        = list(string)
+  default     = []
+}
+
 variable "lambda_memory_size" {
   description = "The manifest lambdas configured memory size"
   type        = number
@@ -68,17 +74,17 @@ variable "lambda_memory_size" {
 variable "lambda_runtime" {
   description = "Identifier of the function's runtime."
   type        = string
-  default = "python3.8"
+  default     = "python3.8"
 }
 
 variable "name" {
   description = "Name of all of the module's resources"
-  type = string
+  type        = string
 }
 
 variable "policy_configs_map" {
   description = "Map of objects to add policies to the iam role"
-  type = map(object({ name = string, arn = string, enabled = bool }))
+  type        = map(object({ name = string, arn = string, enabled = bool }))
   default = {
     "policy_lambda_execute" = {
       "name"    = "lambdaExecute"
