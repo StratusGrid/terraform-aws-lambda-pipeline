@@ -19,7 +19,7 @@ resource "aws_iam_role" "lambda_codedeploy" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "AWSCodeDeployRoleForLambda" {
+resource "aws_iam_role_policy_attachment" "awscodedeployroleforlambda" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSCodeDeployRoleForLambda"
   role       = aws_iam_role.lambda_codedeploy.name
 }

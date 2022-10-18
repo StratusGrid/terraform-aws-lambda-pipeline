@@ -5,7 +5,7 @@ resource "aws_lambda_function" "this" {
   handler                        = var.lambda_handler
   layers                         = var.layers
   memory_size                    = var.lambda_memory_size
-  reserved_concurrent_executions = -1 //?
+  reserved_concurrent_executions = -1 #?
   role                           = aws_iam_role.lambda.arn
   runtime                        = var.lambda_runtime
   timeout                        = 60
@@ -29,7 +29,7 @@ resource "aws_lambda_function" "this" {
     },
   )
 
-  lifecycle { //todo: remove or add aditional things?
+  lifecycle { #todo: remove or add aditional things?
     ignore_changes = [
       filename,
       last_modified,
@@ -81,60 +81,69 @@ resource "aws_iam_role_policy_attachment" "lambda" {
 }
 
 resource "aws_cloudwatch_log_group" "lambda" {
-  name = var.name
-  tags = merge(local.common_tags, {})
+  name       = var.name
+  kms_key_id = aws_kms_key.this.arn
+  tags       = merge(local.common_tags, {})
 }
 
-//data "aws_iam_policy" "aws_lambda_execute" {
-//  arn = "arn:aws:iam::aws:policy/AWSLambdaExecute"
-//}
-//
-//data "aws_iam_policy" "amazon_ssm_read_only_access" {
-//  arn = "arn:aws:iam::aws:policy/AmazonSSMReadOnlyAccess"
-//}
-//
-//data "aws_iam_policy" "aws_xray_full_access" {
-//  arn = "arn:aws:iam::aws:policy/AWSXrayFullAccess"
-//}
-//
-//data "aws_iam_policy" "aws_secretmanager_readwrite" {
-//  arn = "arn:aws:iam::aws:policy/SecretsManagerReadWrite"
-//}
-//
-//data "aws_iam_policy" "lambda_s3_policy" {
-//  arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
-//}
-//
-//data "aws_iam_policy" "lambda_sqs_policy" {
-//  arn = "arn:aws:iam::aws:policy/AmazonSQSFullAccess"
-//}
-//
-//resource "aws_iam_role_policy_attachment" "role_policy_attachment" {
-//  role       = aws_iam_role.lambda.name
-//  policy_arn = data.aws_iam_policy.lambda_s3_policy.arn
-//}
-//
-//resource "aws_iam_role_policy_attachment" "aws_secretmanager_readwrite" {
-//  role       = aws_iam_role.lambda.name
-//  policy_arn = data.aws_iam_policy.aws_secretmanager_readwrite.arn
-//}
-//
-//resource "aws_iam_role_policy_attachment" "aws_lambda_execute" {
-//  role       = aws_iam_role.lambda.name
-//  policy_arn = data.aws_iam_policy.aws_lambda_execute.arn
-//}
-//
-//resource "aws_iam_role_policy_attachment" "amazon_ssm_read_only_access" {
-//  role       = aws_iam_role.lambda.name
-//  policy_arn = data.aws_iam_policy.amazon_ssm_read_only_access.arn
-//}
-//
-//resource "aws_iam_role_policy_attachment" "aws_xray_full_access" {
-//  role       = aws_iam_role.lambda.name
-//  policy_arn = data.aws_iam_policy.aws_xray_full_access.arn
-//}
-//
-//resource "aws_iam_role_policy_attachment" "aws_sqs_excecution" {
-//  role  = aws_iam_role.lambda.name
-//  policy_arn = data.aws_iam_policy.lambda_sqs_policy.arn
-//}
+resource "aws_kms_key" "this" {
+  description         = "Key used to encrypt log groups"
+  tags                = merge(local.common_tags, {})
+  policy              = data.aws_iam_policy_document.this.json
+  enable_key_rotation = true
+}
+
+
+#data "aws_iam_policy" "aws_lambda_execute" {
+#  arn = "arn:aws:iam::aws:policy/AWSLambdaExecute"
+#}
+#
+#data "aws_iam_policy" "amazon_ssm_read_only_access" {
+#  arn = "arn:aws:iam::aws:policy/AmazonSSMReadOnlyAccess"
+#}
+#
+#data "aws_iam_policy" "aws_xray_full_access" {
+#  arn = "arn:aws:iam::aws:policy/AWSXrayFullAccess"
+#}
+#
+#data "aws_iam_policy" "aws_secretmanager_readwrite" {
+#  arn = "arn:aws:iam::aws:policy/SecretsManagerReadWrite"
+#}
+#
+#data "aws_iam_policy" "lambda_s3_policy" {
+#  arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+#}
+#
+#data "aws_iam_policy" "lambda_sqs_policy" {
+#  arn = "arn:aws:iam::aws:policy/AmazonSQSFullAccess"
+#}
+#
+#resource "aws_iam_role_policy_attachment" "role_policy_attachment" {
+#  role       = aws_iam_role.lambda.name
+#  policy_arn = data.aws_iam_policy.lambda_s3_policy.arn
+#}
+#
+#resource "aws_iam_role_policy_attachment" "aws_secretmanager_readwrite" {
+#  role       = aws_iam_role.lambda.name
+#  policy_arn = data.aws_iam_policy.aws_secretmanager_readwrite.arn
+#}
+#
+#resource "aws_iam_role_policy_attachment" "aws_lambda_execute" {
+#  role       = aws_iam_role.lambda.name
+#  policy_arn = data.aws_iam_policy.aws_lambda_execute.arn
+#}
+#
+#resource "aws_iam_role_policy_attachment" "amazon_ssm_read_only_access" {
+#  role       = aws_iam_role.lambda.name
+#  policy_arn = data.aws_iam_policy.amazon_ssm_read_only_access.arn
+#}
+#
+#resource "aws_iam_role_policy_attachment" "aws_xray_full_access" {
+#  role       = aws_iam_role.lambda.name
+#  policy_arn = data.aws_iam_policy.aws_xray_full_access.arn
+#}
+#
+#resource "aws_iam_role_policy_attachment" "aws_sqs_excecution" {
+#  role  = aws_iam_role.lambda.name
+#  policy_arn = data.aws_iam_policy.lambda_sqs_policy.arn
+#}

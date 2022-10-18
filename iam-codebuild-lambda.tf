@@ -47,7 +47,10 @@ resource "aws_iam_role_policy" "lambda_codebuild" {
         "logs:CreateLogStream",
         "logs:PutLogEvents"
       ],
-      "Resource": "*"
+      "Resource": [
+        ${aws_codebuild_project.lambda_codebuild.arn} ,
+        ${aws_codebuild_project.lambda_codedeploy.arn}
+        ]
     },
     {
       "Sid": "S3AccessPolicy",
