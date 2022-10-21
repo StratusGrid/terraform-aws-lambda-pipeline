@@ -73,7 +73,7 @@ resource "aws_codebuild_project" "lambda_codedeploy" {
       value = data.aws_caller_identity.current.account_id
     }
   }
-  //todo: Change this in a way that it uses codedeploy instead of codebuild
+  #todo: Change this in a way that it uses codedeploy instead of codebuild
   source {
     type      = "CODEPIPELINE"
     buildspec = <<BUILDSPEC

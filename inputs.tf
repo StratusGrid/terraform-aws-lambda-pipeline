@@ -10,7 +10,7 @@ variable "artifact_store_bucket_name" {
 }
 
 variable "codestar_connection_arn" {
-  description = ""
+  description = "Github ARN Connection"
   type        = string
 }
 
@@ -119,8 +119,8 @@ variable "policy_configs_map" {
   }
 }
 
-//variable "source_repo" {
-//  description = "The source repository for the terraform"
-//  type        = string
-//}
-//
+#variable "source_repo" {
+#  description = "The source repository for the terraform"
+#  type        = string
+#}
+#

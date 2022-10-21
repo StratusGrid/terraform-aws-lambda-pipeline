@@ -3,5 +3,6 @@ locals {
     "ModuleSourceRepo" = "github.com/StratusGrid/terraform-aws-lambda-pipeline"
     }
   )
-  environment_map = var.environment_variables[*]
+  environment_map      = var.environment_variables[*]
+  kms_allowed_accounts = compact([data.aws_caller_identity.current.account_id])
 }
